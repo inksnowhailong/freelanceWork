@@ -1,7 +1,6 @@
-package com.isoft.mall.model.SQL;
+package com.isoft.mall.model.sql;
 
 import org.apache.ibatis.jdbc.SQL;
-
 /**
  * Cart的SQL语句构建器
  * @author shen
@@ -18,14 +17,14 @@ public class CartSql {
 
     public String selectList(){
         return new SQL(){{
-        SELECT("c.id as id,p.id as productId,c.user_id as userId,c.quantity as quantity,c.selected as selected," +
-                "p.price as price,p.name as productName,p.image as productImage");
-        FROM("imooc_mall_cart "+"c");
-        LEFT_OUTER_JOIN("imooc_mall_product p "+
-                "on p.id=c.product_id");
-        WHERE("c.user_id=#{userId}");
-        AND();
-        WHERE("p.status=1");
+            SELECT("c.id as id,p.id as productId,c.user_id as userId,c.quantity as quantity,c.selected as selected," +
+                    "p.price as price,p.name as productName,p.image as productImage");
+            FROM("imooc_mall_cart "+"c");
+            LEFT_OUTER_JOIN("imooc_mall_product p "+
+                    "on p.id=c.product_id");
+            WHERE("c.user_id=#{userId}");
+            AND();
+            WHERE("p.status=1");
         }}.toString();
     }
 
@@ -41,4 +40,5 @@ public class CartSql {
         }}.toString();
     }
 }
+
 
