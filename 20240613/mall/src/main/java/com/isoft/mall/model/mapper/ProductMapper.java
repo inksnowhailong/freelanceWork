@@ -28,7 +28,6 @@ public interface ProductMapper extends BaseMapper<Product>  {
      * 批量上下架
      * 动态拼接
      */
-
     int batchUpdateSellStatus(@Param("ids") Integer[] ids,@Param("sellStatus") Integer sellStatus);
 
     List<Product> selectList(@Param("query")ProductListQuery query);

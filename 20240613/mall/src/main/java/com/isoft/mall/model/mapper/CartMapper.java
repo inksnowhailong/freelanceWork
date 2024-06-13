@@ -1,8 +1,8 @@
 package com.isoft.mall.model.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.isoft.mall.model.SQL.CartSql;
 import com.isoft.mall.model.pojo.Cart;
+import com.isoft.mall.model.sql.CartSql;
 import com.isoft.mall.vo.CartVo;
 import org.apache.ibatis.annotations.*;
 
@@ -29,7 +29,7 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @return 购物车
      */
     @SelectProvider(type = CartSql.class,method = "selectCartByUserIdAndProductId")
-//    @ResultMap(value = "com.isoft.mall.model.dao.CartMapper.BaseResultMap")
+    @ResultMap(value = "com.isoft.mall.model.dao.CartMapper.BaseResultMap")
     Cart selectCartByUserIdAndProductId(@Param("userId") Integer userId, @Param("productId")Integer productId);
 
     /**

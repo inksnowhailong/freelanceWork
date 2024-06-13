@@ -7,10 +7,10 @@ import javax.annotation.Resource;
 
 @SpringBootTest
 class CartMapperTest {
-    @Resource
-    CartMapper cartMapper;
-    @Test
-    void selectCartByUserIdAndProductId() {
-//        cartMapper.selectCartByUserIdAndProductId()
-    }
+//    @Resource
+//    CartMapper cartMapper;
+//    @Test
+//    void selectCartByUserIdAndProductId() {
+////        cartMapper.selectCartByUserIdAndProductId()
+//    }
 }
