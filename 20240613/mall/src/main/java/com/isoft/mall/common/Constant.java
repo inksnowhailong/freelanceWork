@@ -1,0 +1,101 @@
+package com.isoft.mall.common;
+
+import com.google.common.collect.Sets;
+import com.isoft.mall.exception.MallException;
+import com.isoft.mall.exception.MallExceptionEnum;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.Set;
+
+/**
+ * 常量值
+ */
+@Component
+public class Constant {
+    public static final String SALT="3>?j,fW.eR]H-K";
+    //sessionId
+    public static final String MALL_USER="mall_user";
+
+
+    public static String FILE_UPLOAD_DIR;
+
+    @Value("${file.upload.dir}")
+    public void setFileUploadDir(String fileUploadDir){
+        FILE_UPLOAD_DIR=fileUploadDir;
+    }
+//    排序字段
+    public interface ProductListOrderBy{
+    Set<String> PRICE_ASC_DESC = Sets.newHashSet("price desc", "price asc");
+
+    }
+
+    public interface SaleStatus{
+        /**
+         * 0代表商品下架
+         * 1代表商品上架
+         */
+        int NOT_SALE=0;
+        int SALE=1;
+    }
+    public interface Cart{
+        /**
+         * 0代表购物车未选中状态
+         * 1代表购物车选中状态
+         */
+        int UN_SELECTED=0;
+        int SELECTED =1;
+    }
+
+    public enum OrderStatusEnum{
+        CANCELED(0,"用户已取消"),
+        NOT_PAID(10,"未付款"),
+        PAID(20,"已付款"),
+        DELIVERED(30,"已发货"),
+        FINISHED(40,"交易完成"),
+        ;
+        private int code;
+        private String value;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        OrderStatusEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+        //利用code码返回一个对应的value枚举
+        public static OrderStatusEnum codeOf(int code){
+            for (OrderStatusEnum orderStatusEnum:values()){
+                if (orderStatusEnum.getCode()==code){
+                    return orderStatusEnum;
+                }
+            }
+            throw new MallException(MallExceptionEnum.NO_ENUM);
+        }
+    }
+
+
+
+
+//    icode
+/*    public static String ICODE;
+
+    @Value("${icode}")
+    public void setICODE(String icode) {
+        ICODE = icode;
+    }*/
+}
