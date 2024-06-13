@@ -4,13 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的购物车</title>
+    <style>
+          *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .box{
+            width: 700px;
+            height: 400px;
+            margin: 25px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .top{
+            width: 700px;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 10px;
+            align-items: center;
+        }
+        .top button{
+            width: 70px;
+            height: 30px;
+            border: none;
+            border-radius: 8px;
+            background-color: red;
+            color: white;
+        }
+        table{
+            width: 680px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        table tr td{
+            padding: 10px 0;
+        }
+        table tr td img{
+            width: 60px;
+            height: 80px;
+        }
+        table tr td input{
+            width: 45px;
+            text-align: center;
+            outline: none;
+        }
+        table tr td button{
+            width: 20px;
+            height: 20px;
+        }
+        table tr td p{
+            font-size: 14px;
+        }
+        .foot{
+            width: 680px;
+            height: 50px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+           border-top: 1px dotted gray;
+        }
+        .foot span:nth-of-type(2){
+            margin-right: 150px;
+            font-size: 18px;
+            color: red;
+        }
+        .foot button{
+            width: 60px;
+            height: 30px;
+            border: none;
+            background-color: red;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
+
 </head>
 <body>
-    <h2>我的购物车</h2>
-    
-    <title>确认支付</title>
-    <footer>
-        <p>Copyright © 2023 信管三班 All Rights Reserved.</p>
-    </footer>
+    <div class="box">
+        <div class="top">
+            <h1>购物车</h1>
+            <button onclick="window.close()">关闭</button>
+         </div>
+        <table>
+        <tr>
+            <td><input type="checkbox"id="all"></td>
+           <td>商品照片</td>
+           <td>商品信息</td>
+           <td>单价</td>
+           <td>数量</td>
+           <td>总价</td>
+           <td>操作</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"id="check"></td>
+            <td><img src="./img/dog.jpg"></td>
+            <td>我和狗狗活下来了</td>
+            <td>21.00</td>
+            <td><button class="cal">-</button><input type="text" readonly><button class="cal">+</button></td>
+            <td class="total">0</td>
+            <td><p>移入收藏</p><p class="del">删除</p></td>
+         </tr>
+         <tr>
+            <td><input type="checkbox"id="check"></td>
+            <td><img src="./img/mai.jpg"></td>
+            <td>灰霾老了怎么办</td>
+            <td>24.00</td>
+            <td><button class="cal">-</button><input type="text"  readonly><button class="cal">+</button></td>
+            <td class="total">0</td>
+            <td><p>移入收藏</p><p class="del">删除</p></td>
+         </tr>
+    </table>
+    <div class="foot">
+        <span>商品总计：</span><span class="sumTotal"></span><button>结算</button>
+    </div>
+</div>
+<script>
+     //删除
+     let _del=document.querySelectorAll('.del');
+        [..._del].forEach(_del=>{
+            _del.onclick=function(){
+                _del.parentNode.parentNode.remove()
+                sumTotal()
+            }
+        });
+        //单价
+        let _cals=document.querySelectorAll('.cal')
+        _cals.forEach(_cal=>{
+            _cal.onclick=function(){
+                let opera=_cal.innerHTML
+                let _input=this.parentNode.childNodes[1]
+                if(_input.value<=1&&opera=='-'){
+                    return
+                }
+                let num=eval(_input.value*1+opera+1)
+                _input.value=num
+                let price=this.parentNode.previousElementSibling.innerHTML*1
+                let total=price*num
+                this.parentNode.nextElementSibling.innerHTML=total
+                sumTotal()
+            }
+        })
+        //多选
+        let _all=document.querySelector('#all')
+        let _check=document.querySelectorAll('#check')
+        _all.onclick=function(){
+            _check.forEach(_check=>{
+                _check.checked=_all.checked
+        })
+        sumTotal()
+        }
+        //反选
+        _check.forEach(radio=>{
+            radio.onclick=function(){
+                let _checkedboxes=document.querySelectorAll('input:checked:not(#all)')
+                if(_check.length==_checkedboxes.length){
+                    _all.checked=true
+                }else{
+                    _all.checked=false
+                }
+                sumTotal()
+            }
+        })
+
+        //总和
+        let _sumTotal=document.querySelector('.sumTotal')
+        function sumTotal() {
+            let _checkedboxes=document.querySelectorAll('input:checked:not(#all)')
+            let sumTotal=0
+            _checkedboxes.forEach(_checkedbox=>{
+                sumTotal+=_checkedbox.parentNode.parentNode.children[5].innerText * 1
+            })
+            _sumTotal.innerHTML=sumTotal
+        }
+</script>
 </body>
 </html>
