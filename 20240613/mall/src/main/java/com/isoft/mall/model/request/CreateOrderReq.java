@@ -14,6 +14,7 @@ public class CreateOrderReq {
     private String receiverMobile;
     @NotNull
     private String receiverAddress;
+
     private Integer postage=0;
     private Integer paymentType=1;
 

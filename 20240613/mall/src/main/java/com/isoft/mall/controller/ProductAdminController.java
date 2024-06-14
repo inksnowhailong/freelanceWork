@@ -44,6 +44,7 @@ public class ProductAdminController {
         productService.add(addProductReq);
         return ApiRestResponse.success();
     }
+
     /**
      * 图片上传接口开发
      * 使用UUID命名来 添加图片
@@ -76,6 +77,7 @@ public class ProductAdminController {
             return ApiRestResponse.error(MallExceptionEnum.UPLOAD_FAILED);
         }
     }
+
     /**
      * 获取ip和host
      * @param uri 传一个uri
@@ -102,6 +104,7 @@ public class ProductAdminController {
         productService.update(product);
         return ApiRestResponse.success();
     }
+
     /**
      * 后台删除商品
      */

@@ -91,7 +91,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         if (!ObjectUtils.isEmpty(name)){
             queryWrapper.like("name","%"+name+"%");
         }
-
+        queryWrapper.orderByDesc("create_time");
         List<Product> products = productMapper.selectList(queryWrapper);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return pageInfo;

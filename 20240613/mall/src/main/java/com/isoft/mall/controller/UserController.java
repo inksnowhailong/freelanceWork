@@ -86,6 +86,7 @@ public class UserController {
         userService.updateInformation(user);
         return ApiRestResponse.success();
     }
+
 /**
  * 登出，并且清除session
  */
@@ -96,54 +97,11 @@ public class UserController {
         return ApiRestResponse.success();
     }
 
-/**
- * 管理员登录接口
- */
+
+    @GetMapping("/user/information")
     @ResponseBody
-    @GetMapping("/adminLogin")
-    public ApiRestResponse admainlogin(@RequestParam("userName") String userName, @RequestParam("password") String password,
-                                       HttpSession session) throws MallException {
-        if (ObjectUtils.isEmpty(userName)) {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_USER_NAME);
-        }
-        if (ObjectUtils.isEmpty(password)) {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD);
-        }
-        User user = userService.login(userName, password);
-        //校验是否是管理员
-        if (userService.checkAdminRole(user)) {
-            //保存用户信息时，保护密码，不能返回加密的密码，所以设置成null
-            user.setPassword(null);
-            //将User对象放在session中，保存登录状态
-            session.setAttribute(Constant.MALL_USER, user);
-            return ApiRestResponse.success(user);
-        } else {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_ADMIN);
-        }
+    public User getUser(HttpSession session){
+        return (User)session.getAttribute(Constant.MALL_USER);
     }
-
-    @GetMapping("/user/page")
-    @ResponseBody
-    public IPage<User> findPage(@RequestParam Integer pageNum,
-                                @RequestParam Integer pageSize,
-                                @RequestParam(defaultValue = "") String username,
-                                @RequestParam(defaultValue = "") String emailAddress,
-                                @RequestParam(defaultValue = "") String address){
-        IPage<User> page=new Page<>(pageNum,pageSize);
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.isNotBlank(username)) {
-            queryWrapper.like("username", username);
-        }
-        if (StringUtils.isNotBlank(emailAddress)) {
-            queryWrapper.like("email_address", emailAddress);
-        }
-        if (StringUtils.isNotBlank(address)) {
-            queryWrapper.like("address", address);
-        }
-
-        return userService.userPage(page,queryWrapper);
-    }
-
-
 
 }

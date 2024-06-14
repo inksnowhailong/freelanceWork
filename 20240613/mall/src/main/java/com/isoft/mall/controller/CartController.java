@@ -22,6 +22,9 @@ public class CartController {
     @GetMapping("/list")
     @ApiOperation("购物车列表")
     public ApiRestResponse list(){
+        if ( UserFilter.currentUser == null){
+            return ApiRestResponse.error(10007,"用户未登录");
+        }
         //内部获取用户ID，防止横向越权
         List<CartVo> cartList = cartService.list(UserFilter.currentUser.getId());
         return ApiRestResponse.success(cartList);
@@ -29,7 +32,7 @@ public class CartController {
 
     @PostMapping("/add")
     @ApiOperation("添加商品到购物车")
-    public ApiRestResponse add(@RequestParam Integer productId,Integer count){
+    public ApiRestResponse add(@RequestParam("productId") Integer productId,Integer count){
         List<CartVo> cartVoList = cartService.add(UserFilter.currentUser.getId(), productId, count);
         return ApiRestResponse.success(cartVoList);
     }
@@ -37,9 +40,12 @@ public class CartController {
     @PostMapping("/update")
     @ApiOperation("更新购物车")
     public ApiRestResponse update(@RequestParam Integer productId,Integer count){
-        List<CartVo> cartVoList = cartService.update(UserFilter.currentUser.getId(), productId, count);
+
+        Integer userId = UserFilter.currentUser.getId();
+        List<CartVo> cartVoList = cartService.update(userId, productId, count);
         return ApiRestResponse.success(cartVoList);
     }
+
     @PostMapping("/delete")
     @ApiOperation("删除购物车")
     public ApiRestResponse delete(@RequestParam Integer productId){
@@ -47,6 +53,7 @@ public class CartController {
         List<CartVo> cartVoList = cartService.delete(UserFilter.currentUser.getId(), productId);
         return ApiRestResponse.success(cartVoList);
     }
+
     @PostMapping("/select")
     @ApiOperation("选中/不选中购物车的某商品")
     public ApiRestResponse select(@RequestParam Integer productId, Integer selected){
@@ -57,7 +64,6 @@ public class CartController {
     @PostMapping("/selectAll")
     @ApiOperation("全选择/全不选中购物车的某商品")
     public ApiRestResponse selectAll(@RequestParam Integer selected){
-
         List<CartVo> cartVoList = cartService.selectAllOrNot(UserFilter.currentUser.getId(),selected);
         return ApiRestResponse.success(cartVoList);
     }

@@ -28,10 +28,7 @@ public class ProductController {
 
     @GetMapping("/product/cuslist")
     public ApiRestResponse list(ProductListReq productListReq){
-
         PageInfo pageInfo = productService.list(productListReq);
-
-
         return ApiRestResponse.success(pageInfo);
     }
 

@@ -24,16 +24,6 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectList" resultType="com.isoft.mall.model.pojo.Product">
-    select
-    <include refid="Base_Column_List" />
-    from mall_product
-    where `name` like concat('%',#{keyword,jdbcType=VARCHAR},'%')
-    <if test="orderBy != null">
-      order by ${orderBy}
-    </if>
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mall_product
     where id = #{id,jdbcType=INTEGER}
