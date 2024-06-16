@@ -1,119 +1,139 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的购物车</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      .box {
-        width: 700px;
-        height: 400px;
-        margin: 25px auto;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      .top {
-        width: 700px;
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 10px;
-        align-items: center;
-      }
-      .top button {
-        width: 70px;
-        height: 30px;
-        border: none;
-        border-radius: 8px;
-        background-color: red;
-        color: white;
-      }
-      table {
-        width: 680px;
-        text-align: center;
-        margin: 0 auto;
-      }
-      table tr td {
-        padding: 10px 0;
-      }
-      table tr td img {
-        width: 60px;
-        height: 80px;
-      }
-      table tr td input {
-        width: 45px;
-        text-align: center;
-        outline: none;
-      }
-      table tr td button {
-        width: 20px;
-        height: 20px;
-      }
-      table tr td p {
-        font-size: 14px;
-      }
-      .foot {
-        width: 680px;
-        height: 50px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        border-top: 1px dotted gray;
-      }
-      .foot span:nth-of-type(2) {
-        margin-right: 150px;
-        font-size: 18px;
-        color: red;
-      }
-      .foot button {
-        width: 60px;
-        height: 30px;
-        border: none;
-        background-color: red;
-        color: white;
-        border-radius: 8px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <div class="top">
-        <h1>购物车</h1>
-        <button onclick="window.close()">关闭</button>
-      </div>
-      <table>
-        <tr>
-          <td><input type="checkbox" id="all" /></td>
-          <td>商品照片</td>
-          <td>商品信息</td>
-          <td>单价</td>
-          <td>数量</td>
-          <td>总价</td>
-          <td>操作</td>
-        </tr>
-      </table>
-      <div class="foot">
-        <span>商品总计：</span><span class="sumTotal"></span
-        ><button>结算</button>
-      </div>
-    </div>
-    <script>
-      // 获取列表
-      function getList() {
 
-        $.ajax({
-          url: "http://localhost:8084/cart/list",
-          type: "get",
-          success: function (res) {
-            res.data.forEach((item) => {
-              let tr = document.createElement("tr");
-              tr.innerHTML = `
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的购物车</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .box {
+      width: 700px;
+      margin: 25px auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .top {
+      width: 700px;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 10px;
+      align-items: center;
+    }
+
+    .top button {
+      width: 70px;
+      height: 30px;
+      border: none;
+      border-radius: 8px;
+      background-color: red;
+      color: white;
+    }
+
+    table {
+      width: 680px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    table tr td {
+      padding: 10px 0;
+    }
+
+    table tr td img {
+      width: 60px;
+      height: 80px;
+    }
+
+    table tr td input {
+      width: 45px;
+      text-align: center;
+      outline: none;
+    }
+
+    table tr td button {
+      width: 20px;
+      height: 20px;
+    }
+
+    table tr td p {
+      font-size: 14px;
+    }
+
+    .foot {
+      width: 680px;
+      height: 50px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px dotted gray;
+    }
+
+    .foot span:nth-of-type(2) {
+      margin-right: 150px;
+      font-size: 18px;
+      color: red;
+    }
+
+    .foot button {
+      width: 60px;
+      height: 30px;
+      border: none;
+      background-color: red;
+      color: white;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="top">
+      <h1>购物车</h1>
+      <button onclick="window.history.back()">关闭</button>
+    </div>
+    <table>
+      <tr>
+        <td><input type="checkbox" id="all" /></td>
+        <td>商品照片</td>
+        <td>商品信息</td>
+        <td>单价</td>
+        <td>数量</td>
+        <td>总价</td>
+        <td>操作</td>
+      </tr>
+    </table>
+    <div class="foot">
+      <span>商品总计：</span><span class="sumTotal"></span><button id="gopay">结算</button>
+    </div>
+  </div>
+  <script>
+    if (!sessionStorage.getItem('userinfo')) {
+      window.location.href = 'index4.html';
+    }
+    var payList = {};
+    // 获取列表
+    function getList() {
+
+      $.ajax({
+        url: "http://localhost:8084/cart/list",
+        type: "get",
+        data: {
+          userId: JSON.parse(sessionStorage.getItem('userinfo')).id
+        },
+        success: function (res) {
+          res.data.forEach((item) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
                 <td><input type="checkbox" id="check" /></td>
-                <td><img src="${item.image}" /></td>
+                <td><img src="${item.productImage}" /></td>
                 <td>${item.productName}</td>
                 <td>${item.price}</td>
                 <td>
@@ -123,16 +143,17 @@
                     +
                   </button>
                 </td>
-                <td class="total">${item.price * item.num}</td>
+                <td class="total">${item.price}</td>
                 <td><p class="del" data-id="${item.productId}">删除</p></td>
               `;
-              document.querySelector("table").appendChild(tr);
-            });
-          },
-        });
-      }
-      getList();
+            document.querySelector("table").appendChild(tr);
+          });
+          init()
+        },
+      });
+    }
 
+    function init() {
       //删除
       let _del = document.querySelectorAll(".del");
       [..._del].forEach((_del) => {
@@ -204,6 +225,38 @@
         });
         _sumTotal.innerHTML = sumTotal;
       }
-    </script>
-  </body>
+
+
+    }
+
+
+    getList();
+
+    document.getElementById('gopay').onclick = function () {
+      let _checkedboxes = document.querySelectorAll(
+        "input:checked:not(#all)"
+      );
+      var data = [..._checkedboxes].map(item=>{
+        return {
+          productId:item.parentNode.parentNode.children[6].children[0].getAttribute("data-id"),
+          count:item.parentNode.parentNode.children[4].children[1].value,
+          price:item.parentNode.parentNode.children[3].innerText,
+          img:item.parentNode.parentNode.children[1].children[0].src,
+          allPrice:item.parentNode.parentNode.children[5].innerText,
+          name:item.parentNode.parentNode.children[2].innerText
+
+        }
+      })
+      console.log(data);
+      if(!data.length){
+        alert('请选择商品');
+        return;
+      }
+      sessionStorage.setItem('payList',JSON.stringify(data));
+      window.location.href = 'index6.html';
+    }
+
+  </script>
+</body>
+
 </html>

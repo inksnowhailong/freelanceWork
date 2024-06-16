@@ -6,7 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
-import com.isoft.mall.model.mapper.ProductMapper;
+import com.isoft.mall.model.dao.ProductMapper;
 import com.isoft.mall.model.pojo.Product;
 import com.isoft.mall.model.request.AddProductReq;
 import com.isoft.mall.model.request.ProductListReq;
@@ -38,7 +38,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             throw new MallException(MallExceptionEnum.NAME_EXISTED);
         }
 
-//        int count = productMapper.insertSelective(product);
         int count = productMapper.insert(product);
         if (count==0){
             throw new MallException(MallExceptionEnum.CREATE_FAILED);

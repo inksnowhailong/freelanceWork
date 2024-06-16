@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>了解更多</title>
     <link rel="stylesheet" href="style1.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,4 +72,11 @@
 
 
 </body>
+<script>
+
+if(!sessionStorage.getItem('userinfo')) {
+      window.location.href = 'index4.html';
+    }
+
+</script>
 </html>

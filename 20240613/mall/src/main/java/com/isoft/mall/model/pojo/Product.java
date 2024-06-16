@@ -24,10 +24,6 @@ public class Product {
     @TableField
     private Integer status;
 
-    @TableField("use_time")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date useTime;
-
     @TableField("create_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
@@ -35,6 +31,9 @@ public class Product {
     @TableField("update_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
+
+//    @TableField(exist = false)
+//    private Date useTime;
 
     public Integer getId() {
         return id;
@@ -108,11 +107,4 @@ public class Product {
         this.updateTime = updateTime;
     }
 
-    public Date getUseTime() {
-        return useTime;
-    }
-
-    public void setUseTime(Date useTime) {
-        this.useTime = useTime;
-    }
 }

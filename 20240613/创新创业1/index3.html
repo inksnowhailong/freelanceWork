@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人信息</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,30 +45,32 @@
         <h1>个人信息</h1>
     </header>
 
-    <main>
+    <main id="info">
         <h2>基本信息</h2>
-        <p>姓名：张欣玥</p>
-        <p>年龄：25岁</p>
-        <p>性别：女</p>
-
-        <h2>教育背景</h2>
-        <p>学校：XX大学</p>
-        <p>专业：信息管理与信息系统</p>
-        <p>学历：本科</p>
-
-        <h2>工作经历</h2>
-        <p>公司：ABC公司</p>
-        <p>职位：前端开发工程师</p>
-        <p>工作时间：2018年至今</p>
-
-        <h2>联系方式</h2>
-        <p>电话：1234567890</p>
-        <p>邮箱：example@example.com</p>
-        <p>地址：XX省XX市XX区</p>
+       
     </main>
 
     <footer>
         <p>版权所有 &copy; 2023 信管三班张欣玥</p>
     </footer>
 </body>
+<script>
+
+if(!sessionStorage.getItem('userinfo')) {
+      window.location.href = 'index4.html';
+      
+    }else{
+        var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+       $('#info').html(`
+        <p>用户名：${userinfo.username}</p>
+        <p>邮箱：${userinfo.emailAddress}</p>
+        <p>个性签名：${userinfo.personalizedSignature}</p>
+        <p>地址：${userinfo.address}</p>
+        <p>创建时间：${userinfo.createTime}</p>
+        <p>更新时间：${userinfo.updateTime}</p>
+        <p>昵称：${userinfo.nickName}</p>
+        <p>电话：${userinfo.phone}</p>
+        `)
+    }
+</script>
 </html>

@@ -1,29 +1,22 @@
 package com.isoft.mall.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
+import com.isoft.mall.model.pojo.OrderItem;
 import com.isoft.mall.model.request.CreateOrderReq;
+import com.isoft.mall.vo.OrderNewVo;
 import com.isoft.mall.vo.OrderVO;
+
+import java.util.List;
 
 /**
  * @author shen
  * Order业务接口
  */
 public interface OrderService {
-    String create(CreateOrderReq createOrderReq);
 
-    OrderVO detail(String orderNo);
+    String createOrder(OrderNewVo orderNewVo) throws JsonProcessingException;
 
-    PageInfo listForCustomer(Integer pageNum, Integer pageSize);
+    List<OrderVO> listForCustomer(Integer userId);
 
-    void cancel(String orderNo);
-
-    String qrcode(String orderNo);
-
-    void pay(String orderNo);
-
-    PageInfo listForAdmin(Integer pageNum, Integer pageSize);
-
-    void deliver(String orderNo);
-
-    void finish(String orderNo);
 }

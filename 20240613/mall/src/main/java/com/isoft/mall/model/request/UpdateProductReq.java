@@ -14,8 +14,6 @@ public class UpdateProductReq {
     private String image;
     private String detail;
 
-    private Integer categoryId;
-
     @Min(value = 1,message = "价格不能小于1")
     private Integer price;
 
@@ -23,8 +21,6 @@ public class UpdateProductReq {
     private Integer stock;
 
     private Integer status;
-
-    private Date useTime;
 
 
     public String getName() {
@@ -49,14 +45,6 @@ public class UpdateProductReq {
 
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Integer getPrice() {
@@ -91,13 +79,6 @@ public class UpdateProductReq {
         this.id = id;
     }
 
-    public Date getUseTime() {
-        return useTime;
-    }
-
-    public void setUseTime(Date useTime) {
-        this.useTime = useTime;
-    }
 
     @Override
     public String toString() {
@@ -106,7 +87,6 @@ public class UpdateProductReq {
                 ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
                 ", detail='" + detail + '\'' +
-                ", categoryId=" + categoryId +
                 ", price=" + price +
                 ", stock=" + stock +
                 ", status=" + status +

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.isoft.mall.common.ApiRestResponse;
 import com.isoft.mall.common.Constant;
+import com.isoft.mall.config.UserContextHolder;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
 import com.isoft.mall.model.pojo.User;
@@ -14,10 +15,7 @@ import com.isoft.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,9 +25,12 @@ import javax.servlet.http.HttpSession;
  * 描述： 用户控制器
  */
 @Controller
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService userService;
+
+
 
 /**
  * 注册接口
@@ -68,6 +69,9 @@ public class UserController {
         user.setPassword(null);
         //将User对象放在session中，保存登录状态
         session.setAttribute(Constant.MALL_USER,user);
+        UserContextHolder.setUserId(user.getId());
+        System.out.println("After setting userId, current thread is " + Thread.currentThread().getId());
+
         return ApiRestResponse.success(user);
     }
 /**

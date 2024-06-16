@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isoft.mall.model.mapper.OrderItemMapper">
+<mapper namespace="com.isoft.mall.model.dao.OrderItemMapper">
   <resultMap id="BaseResultMap" type="com.isoft.mall.model.pojo.OrderItem">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
@@ -70,6 +70,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -102,9 +105,13 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="userId != null">
+            #{userId,jdbcType=INTEGER},
+        </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.isoft.mall.model.pojo.OrderItem">
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.isoft.mall.model.pojo.OrderItem">
     update mall_order_item
     <set>
       <if test="orderNo != null">

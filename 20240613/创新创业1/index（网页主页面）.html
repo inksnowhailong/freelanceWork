@@ -71,6 +71,10 @@
     </footer>
   </body>
   <script>
+    if(!sessionStorage.getItem('userinfo')) {
+      window.location.href = 'index4.html';
+    }
+
     $.ajax({
       url: "http://localhost:8084/product/list?pageNum=1&pageSize=10",
       type: "get",
@@ -85,7 +89,6 @@
             <h3>${item.name}</h3>
             <p>${item.detail}</p>
             <p>价格：${item.price}</p>
-            <p>库存：${item.stock}</p>
             <p class="addCar">加入购物车</p>
         `;
           div.getElementsByClassName("addCar")[0].onclick = function () {
@@ -102,6 +105,8 @@
         type: "post",
         data: {
           productId: id,
+          userId: JSON.parse(sessionStorage.getItem("userinfo")).id,
+          count:1
         },
         success: function (res) {
           window.location.href = "index1.html";

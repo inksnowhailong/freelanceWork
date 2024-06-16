@@ -9,7 +9,7 @@ public class Order {
 
     private Integer userId;
 
-    private Integer totalPrice;
+    private Double totalPrice;
 
     private String receiverName;
 
@@ -57,11 +57,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

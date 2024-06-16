@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.isoft.mall.common.Constant;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
-import com.isoft.mall.model.mapper.CartMapper;
-import com.isoft.mall.model.mapper.ProductMapper;
+import com.isoft.mall.model.dao.CartMapper;
+import com.isoft.mall.model.dao.ProductMapper;
 import com.isoft.mall.model.pojo.Cart;
 import com.isoft.mall.model.pojo.Product;
 import com.isoft.mall.service.CartService;
@@ -77,7 +77,6 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     }
 
     /**
-     * 作为程序员，不是先想代码的业务逻辑，而是异常处理
      * 验证添加是否合法
      * @param productId 商品id
      * @param count 想要购买的数量
