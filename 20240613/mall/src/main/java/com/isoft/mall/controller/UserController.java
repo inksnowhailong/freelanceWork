@@ -1,12 +1,8 @@
 package com.isoft.mall.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.isoft.mall.common.ApiRestResponse;
 import com.isoft.mall.common.Constant;
-import com.isoft.mall.config.UserContextHolder;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
 import com.isoft.mall.model.pojo.User;
@@ -69,8 +65,6 @@ public class UserController {
         user.setPassword(null);
         //将User对象放在session中，保存登录状态
         session.setAttribute(Constant.MALL_USER,user);
-        UserContextHolder.setUserId(user.getId());
-        System.out.println("After setting userId, current thread is " + Thread.currentThread().getId());
 
         return ApiRestResponse.success(user);
     }

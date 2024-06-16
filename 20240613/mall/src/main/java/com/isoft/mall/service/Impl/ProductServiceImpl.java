@@ -69,13 +69,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             throw new MallException(MallExceptionEnum.DELETE_FAILED);
         }
     }
-    /**
-     * 批量上下架功能
-     */
-    @Override
-    public void batchUpdateSellStatus(Integer[] ids, Integer sellStatus) {
-        productMapper.batchUpdateSellStatus(ids, sellStatus);
-    }
 
     /**
      * 商品后台分页查询
@@ -94,12 +87,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         List<Product> products = productMapper.selectList(queryWrapper);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return pageInfo;
-    }
-
-    @Override
-    public Product detail(Integer id){
-        Product product = productMapper.selectByPrimaryKey(id);
-        return product;
     }
 
     @Override

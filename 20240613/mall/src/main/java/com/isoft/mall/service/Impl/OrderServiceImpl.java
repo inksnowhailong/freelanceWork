@@ -6,33 +6,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.google.zxing.WriterException;
-import com.isoft.mall.common.Constant;
-import com.isoft.mall.exception.MallException;
-import com.isoft.mall.exception.MallExceptionEnum;
-import com.isoft.mall.filter.UserFilter;
 import com.isoft.mall.model.dao.*;
 import com.isoft.mall.model.pojo.*;
-import com.isoft.mall.model.request.CreateOrderReq;
-import com.isoft.mall.service.CartService;
 import com.isoft.mall.service.OrderService;
-import com.isoft.mall.service.UserService;
 import com.isoft.mall.util.OrderCodeFactory;
-import com.isoft.mall.util.QRCodeGenerator;
 import com.isoft.mall.vo.*;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +27,7 @@ import java.util.stream.Collectors;
  * Order订单的业务实现类
  */
 @Service
-public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+public class OrderServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem> implements OrderService {
     @Resource
     ProductMapper productMapper;
     @Resource
@@ -57,7 +40,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * 创建订单
      * @param orderNewVo
      * @return
-     * TODO 使用
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -72,9 +54,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         Integer userId = orderNewVo.getUserId();
         //订单号
         String orderNo = OrderCodeFactory.getOrderCode(Long.valueOf(userId));
-        //获取用户信息
-//        QueryWrapper<User> id = new QueryWrapper<User>().eq("id", userId);
-//        User user = userMapper.selectOne(id);
+
         //订单信息
         productList.forEach(product -> {
             OrderItem orderItem = new OrderItem();
@@ -108,7 +88,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     /**
      * 给用户看的购物车列表
-     * TODO 使用
      */
     public List<OrderVO> listForCustomer(Integer userId) {
         List<OrderItem> orderItemList = orderItemMapper.selectList(new QueryWrapper<OrderItem>().eq("user_id", userId));
@@ -129,6 +108,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             orderVO.setTotalPrice(totalPrice);
             orderVOArrayList.add(orderVO);
         }
+        //orderVOArrayList按照创建时间排序
+        orderVOArrayList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
 
         return orderVOArrayList;
     }

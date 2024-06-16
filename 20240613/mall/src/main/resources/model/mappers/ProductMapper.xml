@@ -133,6 +133,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.isoft.mall.model.pojo.Product">
     update mall_product
     set `name` = #{name,jdbcType=VARCHAR},
@@ -145,15 +146,6 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <update id="batchUpdateSellStatus">
-     update mall_product set status =#{sellStatus}
-     where id in
-     <foreach collection="ids" close=")" item ="id" open="(" separator=",">
-           #{id}
-     </foreach>
-  </update>
-
 
 
 

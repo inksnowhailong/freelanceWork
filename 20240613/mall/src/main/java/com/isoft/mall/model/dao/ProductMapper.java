@@ -21,11 +21,5 @@ public interface ProductMapper extends BaseMapper<Product>  {
     @Select("select * from mall_product where name=#{name,jdbcType=VARCHAR}")
     Product selectByName(@Param("name") String name);
 
-    /**
-     * 批量上下架
-     * 动态拼接
-     */
-    int batchUpdateSellStatus(@Param("ids") Integer[] ids,@Param("sellStatus") Integer sellStatus);
-
 
 }

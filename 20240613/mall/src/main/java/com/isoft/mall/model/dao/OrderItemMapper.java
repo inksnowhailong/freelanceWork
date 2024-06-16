@@ -12,8 +12,6 @@ import java.util.List;
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
     int deleteByPrimaryKey(Integer id);
 
-//    int insert(OrderItem record);
-
     int insertSelective(OrderItem record);
 
     OrderItem selectByPrimaryKey(Integer id);
@@ -21,9 +19,5 @@ public interface OrderItemMapper extends BaseMapper<OrderItem> {
     int updateByPrimaryKeySelective(OrderItem record);
 
     int updateByPrimaryKey(OrderItem record);
-
-    @Select("select * from mall_order_item where order_no=#{orderNo};")
-    @ResultMap(value = "com.isoft.mall.model.dao.OrderItemMapper.BaseResultMap")
-    List<OrderItem> selectByOrderNo(String orderNo);
 
 }
