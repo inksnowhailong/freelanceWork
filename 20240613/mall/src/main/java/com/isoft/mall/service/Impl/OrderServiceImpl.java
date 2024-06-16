@@ -14,10 +14,7 @@ import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
 import com.isoft.mall.filter.UserFilter;
 import com.isoft.mall.model.dao.*;
-import com.isoft.mall.model.pojo.Order;
-import com.isoft.mall.model.pojo.OrderItem;
-import com.isoft.mall.model.pojo.Product;
-import com.isoft.mall.model.pojo.User;
+import com.isoft.mall.model.pojo.*;
 import com.isoft.mall.model.request.CreateOrderReq;
 import com.isoft.mall.service.CartService;
 import com.isoft.mall.service.OrderService;
@@ -52,9 +49,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     ProductMapper productMapper;
     @Resource
     OrderItemMapper orderItemMapper;
+    @Resource
+    CartMapper cartMapper;
 
-    @Value("${file.upload.ip}")
-    String ip;
 
     /**
      * 创建订单
@@ -69,6 +66,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         String productJson = orderNewVo.getProductList();
         //将json字符串转换为对象
         ObjectMapper objectMapper = new ObjectMapper();
+        //购物车的商品
         List<ProductVo> productList = objectMapper.readValue(productJson, new TypeReference<List<ProductVo>>(){});
 
         Integer userId = orderNewVo.getUserId();
@@ -95,10 +93,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         });
         //删除product的库存
         productList.forEach(product -> {
-            Product product1 = productMapper.selectByPrimaryKey(Integer.valueOf(product.getProductId()));
+            Product product1 = productMapper.selectById(Integer.valueOf(product.getProductId()));
             product1.setStock(product1.getStock()-Integer.valueOf(product.getCount()));
             productMapper.updateByPrimaryKeySelective(product1);
         });
+        //删除购物车中的商品
+        productList.forEach(product -> {
+            QueryWrapper<Cart> cartQueryWrapper = new QueryWrapper<Cart>().eq("user_id", userId).eq("product_id", product.getProductId());
+            cartMapper.delete(cartQueryWrapper);
+        });
+
         return orderNo;
     }
 

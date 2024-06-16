@@ -15,9 +15,10 @@
         <ul>
           <li><a href="#">河大文创</a></li>
 
-          <li><a href="index2.html">●学校简介</a></li>
-          <li><a href="index1.html">●购物车</a></li>
-          <li><a href="index4.html">●个人信息</a></li>
+          <li><a href="index2.html">学校简介</a></li>
+          <li><a href="index1.html">购物车</a></li>
+          <li><a href="index7.html">历史订单</a></li>
+          <li><a href="index4.html">个人信息</a></li>
         </ul>
       </nav>
     </header>
@@ -71,10 +72,14 @@
     </footer>
   </body>
   <script>
-    if(!sessionStorage.getItem('userinfo')) {
-      window.location.href = 'index4.html';
+      // 页面在渲染之前执行的生命周期函数
+      document.addEventListener("DOMContentLoaded", function () {
+    
+    if (!sessionStorage.getItem('userinfo')) {
+        window.location.href = 'index4.html';
     }
 
+});
     $.ajax({
       url: "http://localhost:8084/product/list?pageNum=1&pageSize=10",
       type: "get",
@@ -89,6 +94,7 @@
             <h3>${item.name}</h3>
             <p>${item.detail}</p>
             <p>价格：${item.price}</p>
+            <p>库存：${item.stock}</p>
             <p class="addCar">加入购物车</p>
         `;
           div.getElementsByClassName("addCar")[0].onclick = function () {

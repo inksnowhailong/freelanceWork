@@ -115,9 +115,14 @@
     </div>
   </div>
   <script>
-    if (!sessionStorage.getItem('userinfo')) {
-      window.location.href = 'index4.html';
-    }
+    // 页面在渲染之前执行的生命周期函数
+    document.addEventListener("DOMContentLoaded", function () {
+
+      if (!sessionStorage.getItem('userinfo')) {
+        window.location.href = 'index4.html';
+      }
+
+    });
     var payList = {};
     // 获取列表
     function getList() {
@@ -164,6 +169,7 @@
             type: "post",
             data: {
               productId: _del.getAttribute("data-id"),
+              userId: JSON.parse(sessionStorage.getItem("userinfo")).id,
             },
             success: function (data) {
               sumTotal();
@@ -176,7 +182,7 @@
       _cals.forEach((_cal) => {
         _cal.onclick = function () {
           let opera = _cal.innerHTML;
-          let _input = this.parentNode.childNodes[1];
+          let _input = this.parentNode.childNodes[2];
           if (_input.value <= 1 && opera == "-") {
             return;
           }
@@ -184,6 +190,7 @@
           _input.value = num;
           let price = this.parentNode.previousElementSibling.innerHTML * 1;
           let total = price * num;
+
           this.parentNode.nextElementSibling.innerHTML = total;
           sumTotal();
         };
@@ -236,23 +243,23 @@
       let _checkedboxes = document.querySelectorAll(
         "input:checked:not(#all)"
       );
-      var data = [..._checkedboxes].map(item=>{
+      var data = [..._checkedboxes].map(item => {
         return {
-          productId:item.parentNode.parentNode.children[6].children[0].getAttribute("data-id"),
-          count:item.parentNode.parentNode.children[4].children[1].value,
-          price:item.parentNode.parentNode.children[3].innerText,
-          img:item.parentNode.parentNode.children[1].children[0].src,
-          allPrice:item.parentNode.parentNode.children[5].innerText,
-          name:item.parentNode.parentNode.children[2].innerText
+          productId: item.parentNode.parentNode.children[6].children[0].getAttribute("data-id"),
+          count: item.parentNode.parentNode.children[4].children[1].value,
+          price: item.parentNode.parentNode.children[3].innerText,
+          img: item.parentNode.parentNode.children[1].children[0].src,
+          allPrice: item.parentNode.parentNode.children[5].innerText,
+          name: item.parentNode.parentNode.children[2].innerText
 
         }
       })
       console.log(data);
-      if(!data.length){
+      if (!data.length) {
         alert('请选择商品');
         return;
       }
-      sessionStorage.setItem('payList',JSON.stringify(data));
+      sessionStorage.setItem('payList', JSON.stringify(data));
       window.location.href = 'index6.html';
     }
 

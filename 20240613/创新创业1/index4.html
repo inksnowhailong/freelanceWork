@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,20 @@
             margin: 0;
             padding: 0;
         }
+
         html {
             height: 100%;
         }
+
         body {
             height: 100%;
         }
+
         .container {
             height: 100%;
             background-image: linear-gradient(to right, #ebe9dd, #f2f2f2);
         }
+
         .login-wrapper {
             background-color: #fff;
             width: 358px;
@@ -31,12 +36,14 @@
             top: 50%;
             transform: translate(-50%, -50%);
         }
+
         .header {
             font-size: 38px;
             font-weight: bold;
             text-align: center;
             line-height: 200px;
         }
+
         .input-item {
             display: block;
             width: 100%;
@@ -47,9 +54,11 @@
             font-size: 15px;
             outline: none;
         }
+
         .input-item:placeholder {
             text-transform: uppercase;
         }
+
         .btn {
             text-align: center;
             padding: 10px;
@@ -59,16 +68,19 @@
             color: #000;
             cursor: pointer;
         }
+
         .msg {
             text-align: center;
             line-height: 88px;
         }
+
         a {
             text-decoration-line: none;
             color: #abc1ee;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="login-wrapper">
@@ -84,12 +96,18 @@
             </div> -->
         </div>
     </div>
+
     <script>
-        if(sessionStorage.getItem('userinfo')){
-            window.location.href = 'index3.html';
-        }
-        document.getElementById('login').onclick = function() {
-            
+        // 页面在渲染之前执行的生命周期函数
+        document.addEventListener("DOMContentLoaded", function () {
+    
+            if (sessionStorage.getItem('userinfo')) {
+                window.location.href = 'index3.html';
+            }
+    
+        });
+        document.getElementById('login').onclick = function () {
+
             $.ajax({
                 url: 'http://localhost:8084/login',
                 type: 'get',
@@ -97,15 +115,16 @@
                     userName: document.getElementsByName('userName')[0].value,
                     password: document.getElementsByName('password')[0].value
                 },
-                success: function(res) {
-                    
-                        sessionStorage.setItem('userinfo',JSON.stringify(res.data));
-                        window.location.href = 'index（网页主页面）.html';
-                    
+                success: function (res) {
+
+                    sessionStorage.setItem('userinfo', JSON.stringify(res.data));
+                    window.location.href = 'index（网页主页面）.html';
+
                 }
             });
-           
+
         }
     </script>
 </body>
+
 </html>

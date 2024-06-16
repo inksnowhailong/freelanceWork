@@ -50,4 +50,6 @@ public interface CartMapper extends BaseMapper<Cart> {
      */
     @UpdateProvider(type = CartSql.class,method = "selectOrNot")
     Integer selectOrNot(@Param("userId") Integer userId, @Param("productId")Integer productId,@Param("selected")Integer selected);
+
+    Integer deleteByUserId(Integer userId, Integer valueOf);
 }

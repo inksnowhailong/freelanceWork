@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,8 +39,19 @@
             padding: 20px;
             text-align: center;
         }
+
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #f2f2f2, #ebe9dd);
+            color: #000;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <h1>个人信息</h1>
@@ -47,7 +59,7 @@
 
     <main id="info">
         <h2>基本信息</h2>
-       
+
     </main>
 
     <footer>
@@ -55,13 +67,13 @@
     </footer>
 </body>
 <script>
-
-if(!sessionStorage.getItem('userinfo')) {
-      window.location.href = 'index4.html';
-      
-    }else{
-        var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
-       $('#info').html(`
+    // 页面在渲染之前执行的生命周期函数
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!sessionStorage.getItem('userinfo')) {
+            window.location.href = 'index4.html';
+        } else {
+            var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+            $('#info').html(`
         <p>用户名：${userinfo.username}</p>
         <p>邮箱：${userinfo.emailAddress}</p>
         <p>个性签名：${userinfo.personalizedSignature}</p>
@@ -70,7 +82,12 @@ if(!sessionStorage.getItem('userinfo')) {
         <p>更新时间：${userinfo.updateTime}</p>
         <p>昵称：${userinfo.nickName}</p>
         <p>电话：${userinfo.phone}</p>
+        <button class="btn" onclick="sessionStorage.removeItem('userinfo');window.location.href='index4.html'">退出</button>
         `)
-    }
+        }
+
+    });
+
 </script>
+
 </html>
