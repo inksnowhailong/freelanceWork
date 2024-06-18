@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
+
         html {
             height: 100%;
         }
+
         body {
             height: 100%;
         }
+
         .container {
             height: 100%;
             background-image: linear-gradient(to right, #ebe9dd, #f2f2f2);
         }
+
         .login-wrapper {
             background-color: #fff;
             width: 358px;
@@ -30,12 +36,14 @@
             top: 50%;
             transform: translate(-50%, -50%);
         }
+
         .header {
             font-size: 38px;
             font-weight: bold;
             text-align: center;
             line-height: 200px;
         }
+
         .input-item {
             display: block;
             width: 100%;
@@ -46,9 +54,11 @@
             font-size: 15px;
             outline: none;
         }
+
         .input-item:placeholder {
             text-transform: uppercase;
         }
+
         .btn {
             text-align: center;
             padding: 10px;
@@ -58,35 +68,63 @@
             color: #000;
             cursor: pointer;
         }
+
         .msg {
             text-align: center;
             line-height: 88px;
         }
+
         a {
             text-decoration-line: none;
             color: #abc1ee;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="login-wrapper">
             <div class="header">登录</div>
             <div class="form-wrapper">
-                <input type="text" name="username" placeholder="用户名" class="input-item">
-                <input type="password" name="password" placeholder="密码" class="input-item">
+                <input type="text" value="admin" name="userName" placeholder="用户名" class="input-item">
+                <input type="password" value="admin123" name="password" placeholder="密码" class="input-item">
                 <div class="btn" id="login">登录</div>
             </div>
-            <div class="msg">
+            <!-- <div class="msg">
                还没有账号？
                 <a href="#">去注册</a>
-            </div>
+            </div> -->
         </div>
     </div>
+
     <script>
-        document.getElementById('login').onclick = function() {
-           window.location.href = 'index3.html';
+        // 页面在渲染之前执行的生命周期函数
+        document.addEventListener("DOMContentLoaded", function () {
+    
+            if (sessionStorage.getItem('userinfo')) {
+                window.location.href = 'index3.html';
+            }
+    
+        });
+        document.getElementById('login').onclick = function () {
+
+            $.ajax({
+                url: 'http://localhost:8084/login',
+                type: 'get',
+                data: {
+                    userName: document.getElementsByName('userName')[0].value,
+                    password: document.getElementsByName('password')[0].value
+                },
+                success: function (res) {
+
+                    sessionStorage.setItem('userinfo', JSON.stringify(res.data));
+                    window.location.href = 'index（网页主页面）.html';
+
+                }
+            });
+
         }
     </script>
 </body>
+
 </html>

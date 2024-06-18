@@ -10,7 +10,7 @@ import com.isoft.mall.model.pojo.User;
  * UserService
  */
 public interface UserService {
-    User getUser();
+
     /**
      * 注册
      */

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
-import com.isoft.mall.model.mapper.UserMapper;
+import com.isoft.mall.model.dao.UserMapper;
 import com.isoft.mall.model.pojo.User;
 import com.isoft.mall.service.UserService;
 import com.isoft.mall.util.MD2Utils;
@@ -22,10 +22,6 @@ import java.security.NoSuchAlgorithmException;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService  {
     @Autowired
     UserMapper userMapper;
-    @Override
-    public User getUser() {
-        return userMapper.selectByPrimaryKey(2);
-    }
 
     @Override
     public void register(String userName, String password) throws MallException {

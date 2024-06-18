@@ -1,27 +1,38 @@
 package com.isoft.mall.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
+@TableName("mall_order_item")
 public class OrderItem {
+    @TableId(value = "id",type= com.baomidou.mybatisplus.annotation.IdType.AUTO)
     private Integer id;
-
+    @TableField("order_no")
     private String orderNo;
-
+    @TableField("product_id")
     private Integer productId;
-
+    @TableField("product_name")
     private String productName;
-
+    @TableField("product_img")
     private String productImg;
-
-    private Integer unitPrice;
-
+    @TableField("unit_price")
+    private Double unitPrice;
+    @TableField
     private Integer quantity;
-
-    private Integer totalPrice;
-
+//    @TableField("total_price")
+//    private Double totalPrice;
+    @TableField("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField("update_time")
     private Date updateTime;
+    @TableField("user_id")
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -63,11 +74,11 @@ public class OrderItem {
         this.productImg = productImg == null ? null : productImg.trim();
     }
 
-    public Integer getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Integer unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -77,14 +88,6 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public Date getCreateTime() {
@@ -101,5 +104,13 @@ public class OrderItem {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

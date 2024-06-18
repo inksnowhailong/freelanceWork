@@ -18,8 +18,6 @@ public class AddProductReq {
     @Max(value = 10000,message = "库存不能大于10000")
     private Integer stock;
 
-    private Date useTime;
-
     private Integer status;
 
 
@@ -71,13 +69,6 @@ public class AddProductReq {
         this.status = status;
     }
 
-    public Date getUseTime() {
-        return useTime;
-    }
-
-    public void setUseTime(Date useTime) {
-        this.useTime = useTime;
-    }
 
     @Override
     public String toString() {

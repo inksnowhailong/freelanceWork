@@ -6,7 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.isoft.mall.exception.MallException;
 import com.isoft.mall.exception.MallExceptionEnum;
-import com.isoft.mall.model.mapper.ProductMapper;
+import com.isoft.mall.model.dao.ProductMapper;
 import com.isoft.mall.model.pojo.Product;
 import com.isoft.mall.model.request.AddProductReq;
 import com.isoft.mall.model.request.ProductListReq;
@@ -38,7 +38,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             throw new MallException(MallExceptionEnum.NAME_EXISTED);
         }
 
-//        int count = productMapper.insertSelective(product);
         int count = productMapper.insert(product);
         if (count==0){
             throw new MallException(MallExceptionEnum.CREATE_FAILED);
@@ -70,13 +69,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
             throw new MallException(MallExceptionEnum.DELETE_FAILED);
         }
     }
-    /**
-     * 批量上下架功能
-     */
-    @Override
-    public void batchUpdateSellStatus(Integer[] ids, Integer sellStatus) {
-        productMapper.batchUpdateSellStatus(ids, sellStatus);
-    }
 
     /**
      * 商品后台分页查询
@@ -95,12 +87,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         List<Product> products = productMapper.selectList(queryWrapper);
         PageInfo<Product> pageInfo = new PageInfo<>(products);
         return pageInfo;
-    }
-
-    @Override
-    public Product detail(Integer id){
-        Product product = productMapper.selectByPrimaryKey(id);
-        return product;
     }
 
     @Override

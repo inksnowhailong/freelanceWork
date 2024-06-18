@@ -21,11 +21,7 @@ public interface ProductService {
 
     void delete(Integer id);
 
-    void batchUpdateSellStatus(Integer[] ids, Integer sellStatus);
-
     PageInfo<Product> listForAdmin(Integer pageNum, Integer pageSize,String name);
-
-    Product detail(Integer id);
 
     PageInfo list(ProductListReq productListReq);
 }

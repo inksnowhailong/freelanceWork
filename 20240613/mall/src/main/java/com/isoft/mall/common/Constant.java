@@ -88,14 +88,4 @@ public class Constant {
         }
     }
 
-
-
-
-//    icode
-/*    public static String ICODE;
-
-    @Value("${icode}")
-    public void setICODE(String icode) {
-        ICODE = icode;
-    }*/
 }

@@ -1,21 +1,30 @@
 package com.isoft.mall.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@TableName("mall_cart")
 public class Cart implements Serializable {
+    @TableId(value = "id",type= com.baomidou.mybatisplus.annotation.IdType.AUTO)
     private Integer id;
-
+    @TableField("product_id")
     private Integer productId;
-
+    @TableField("user_id")
     private Integer userId;
-
+    @TableField
     private Integer quantity;
-
+    @TableField
     private Integer selected;
-
+    @TableField("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField("update_time")
     private Date updateTime;
 
     public Integer getId() {
